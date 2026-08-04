@@ -1,26 +1,182 @@
-@import "tailwindcss";
+@import 'tailwindcss';
+
+/* -------------------------------------------------------------------------- */
+/* Tokens                                                                      */
+/*                                                                             */
+/* An instrument, not a document. The vocabulary is precision measurement       */
+/* equipment: plotting surfaces, fine graticule, tabular numerals, hairlines    */
+/* that behave like axes.                                                      */
+/* -------------------------------------------------------------------------- */
+
+@theme {
+  --color-surface: #f5f7f7;
+  --color-surface-sunk: #ecf0f0;
+  --color-graticule: #dce4e4;
+  --color-ink: #10161a;
+  --color-ink-muted: #5c6a70;
+
+  /*
+   * THE SIGNAL RULE: --signal may only be applied to a value that is currently
+   * changing or can change. A static heading in signal teal is a lie. If you
+   * find signal teal on an inert element, that is a bug, not a style choice.
+   */
+  --color-signal: #0e8f76;
+
+  /* The readout: the one dark, lit object on a light page. */
+  --color-instrument-bg: #0a0f12;
+  /*
+   * --phosphor and --indigo never appear outside the readout panel. That
+   * containment is what makes the breathing field read as a component doing a
+   * job rather than as decoration.
+   */
+  --color-phosphor: #4fe3c1;
+  --color-indigo: #6c7bff;
+
+  --font-display: var(--font-fraunces), Georgia, serif;
+  --font-sans: var(--font-plex-sans), system-ui, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, monospace;
+  --font-arabic: var(--font-plex-arabic), var(--font-plex-sans), sans-serif;
+
+  /* Six steps, ratio ~1.333, defined once. */
+  --text-2xs: 0.6875rem;
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.333rem;
+  --text-xl: 1.777rem;
+  --text-2xl: 2.369rem;
+  --text-3xl: 3.157rem;
+  --text-4xl: 4.209rem;
+
+  --leading-tight: 1.1;
+  --leading-snug: 1.3;
+  --leading-normal: 1.6;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Base                                                                        */
+/* -------------------------------------------------------------------------- */
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* The layout grid, exposed so the graticule can align to the real columns. */
+  --gutter-width: 11rem;
+  --content-max: 68rem;
+  --page-pad: 2rem;
+  --rule: 1px solid var(--color-graticule);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
+@media (max-width: 900px) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --gutter-width: 0rem;
+    --page-pad: 1.25rem;
   }
 }
 
+html {
+  background: var(--color-surface);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  /*
+   * Tabular numerals everywhere, globally. Data is a first-class type role
+   * here, not a garnish, and nothing may jitter as a number changes.
+   */
+  font-variant-numeric: tabular-nums;
+  -webkit-text-size-adjust: 100%;
+}
+
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  /*
+   * The graticule. Aligned to the real layout grid rather than an arbitrary
+   * rhythm, so it reads as measurement texture and never as decoration.
+   */
+  background-image:
+    linear-gradient(to right, var(--color-graticule) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--color-graticule) 1px, transparent 1px);
+  background-size: 4rem 4rem;
+  background-position: calc(var(--page-pad) - 1px) 0;
+  /* Subtle enough to read as texture. */
+  background-blend-mode: multiply;
+  opacity: 1;
+}
+
+body::before {
+  /* Fades the graticule out so it never competes with the text. */
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: var(--color-surface);
+  opacity: 0.72;
+  pointer-events: none;
+  z-index: 0;
+}
+
+body > * {
+  position: relative;
+  z-index: 1;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--color-signal) 22%, transparent);
+  color: var(--color-ink);
+}
+
+/* -------------------------------------------------------------------------- */
+/* Focus                                                                       */
+/* -------------------------------------------------------------------------- */
+
+:focus-visible {
+  outline: 2px solid var(--color-signal);
+  outline-offset: 3px;
+  border-radius: 1px;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Type roles                                                                  */
+/* -------------------------------------------------------------------------- */
+
+@utility display {
+  font-family: var(--font-display);
+  font-optical-sizing: auto;
+  font-variation-settings: 'SOFT' 20, 'WONK' 1;
+  letter-spacing: -0.02em;
+  line-height: var(--leading-tight);
+  text-wrap: balance;
+}
+
+/* Instrument annotation: the small letterspaced mono labels. */
+@utility annotation {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-ink-muted);
+  font-weight: 500;
+}
+
+@utility prose-measure {
+  max-width: 68ch;
+  line-height: var(--leading-normal);
+}
+
+/* A hairline that behaves like a plot axis. */
+@utility hairline {
+  border-top: var(--rule);
+}
+
+/* -------------------------------------------------------------------------- */
+/* Motion                                                                      */
+/*                                                                             */
+/* Nothing in phases 1-3 animates. This is here so that the moment anything     */
+/* does, it is already accountable to the reduced-motion contract.              */
+/* -------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
