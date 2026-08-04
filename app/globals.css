@@ -19,11 +19,22 @@
    * THE SIGNAL RULE: --signal may only be applied to a value that is currently
    * changing or can change. A static heading in signal teal is a lie. If you
    * find signal teal on an inert element, that is a bug, not a style choice.
+   *
+   * The two sanctioned uses, and there are no others:
+   *   1. A computed value that moves — a similarity score above the cutoff, a
+   *      validation check's outcome, the confidence numeral.
+   *   2. Interactive state — :focus-visible, and :hover on a control. Teal here
+   *      means "this responds to you", which is itself a live value.
+   * Everything else on the page is ink, ink-muted or graticule.
    */
   --color-signal: #0e8f76;
 
   /* The readout: the one dark, lit object on a light page. */
   --color-instrument-bg: #0a0f12;
+  /* Text inside the panel. Both clear 4.5:1 on --instrument-bg. */
+  --color-instrument-ink: #e8f0f0;
+  --color-instrument-muted: #93a5ac;
+  --color-instrument-rule: #233036;
   /*
    * --phosphor and --indigo never appear outside the readout panel. That
    * containment is what makes the breathing field read as a component doing a

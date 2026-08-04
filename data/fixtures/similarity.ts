@@ -80,5 +80,12 @@ export const CHUNKS: Chunk[] = [
 /** Where the cutoff sits, and why it is the decision that matters. */
 export const CUTOFF = 0.74
 
+/**
+ * Plot bounds for the score bars. Deliberately not 0–1: every score here sits
+ * between 0.70 and 0.90, and a 0–1 axis would compress the only part of the
+ * range that carries any information into a tenth of the width.
+ */
+export const SCORE_AXIS = { min: 0.65, max: 0.95 } as const
+
 export const CUTOFF_READING =
   'The two chunks below the line score in the low 0.7s and are worthless for this question — they are contract boilerplate that reads like every other clause. That is what similarity measures: whether two passages talk alike, not whether one answers the other. Set the cutoff too low and you retrieve fluent noise, which is worse than retrieving nothing, because it is what the model will confidently cite.'

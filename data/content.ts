@@ -289,6 +289,72 @@ export const SERVICES = [
 /* Closing                                                                     */
 /* -------------------------------------------------------------------------- */
 
+/* -------------------------------------------------------------------------- */
+/* The readout                                                                 */
+/*                                                                             */
+/* Plain and never coy. "I think you're here to evaluate technical depth" beats */
+/* "Analyzing visitor profile…". The copy must also never claim the page is     */
+/* doing something it is not — there is no AI watching, and saying so would be  */
+/* the one lie that discredits everything else.                                 */
+/* -------------------------------------------------------------------------- */
+
+export const READOUT = {
+  title: 'What I think you came for',
+  unresolved: {
+    heading: 'Still working it out.',
+    body: 'Not enough to go on yet. Everything below is in its default order.',
+  },
+  forming: {
+    heading: 'Starting to think:',
+    body: 'Not confident enough to reorder anything on that yet.',
+  },
+  resolved: {
+    heading: 'I think:',
+    body: 'The sections below are ordered for that.',
+  },
+  pinned: {
+    heading: 'Set by you:',
+    body: 'I’ll stop guessing and leave the order alone.',
+  },
+  confidenceLabel: 'Confidence',
+  signalsLabel: 'What I’m going on',
+  overridePrompt: 'Not you?',
+  clearLabel: 'Let it guess again',
+  expandLabel: 'Show the reasoning',
+  collapseLabel: 'Hide the reasoning',
+  disclosureLabel: 'How this works',
+} as const
+
+/** The disclosure panel, in the interface's voice rather than a legal one. */
+export const HOW_THIS_WORKS = {
+  heading: 'How this works',
+  intro:
+    'This page guesses what you came for and reorders its sections to match. Here is exactly how, because a page that profiles you and will not say how is not worth trusting.',
+  points: [
+    {
+      title: 'Nothing leaves your browser',
+      body: 'No analytics, no cookie, no network request, no server. The scoring runs here, on this page, and the result is never sent anywhere. You can check — open the network tab and reload.',
+    },
+    {
+      title: 'It is not an AI',
+      body: 'It is a scoring model: each signal below adds or subtracts a fixed number for each of four guesses, and the totals become probabilities. That is why every number here can be explained. It also means it is instant, free, and works offline.',
+    },
+    {
+      title: 'Confidence means how sharp, not how high',
+      body: 'If two guesses are close, confidence is low even when one is technically ahead. That is honest: a near-tie is not knowledge, and reporting it as though it were would be the easy lie to tell here.',
+    },
+    {
+      title: 'What is remembered',
+      body: 'One entry in this browser’s local storage: a single word for the guess and the time. Nothing else, and you can wipe it below.',
+    },
+  ],
+  weightsHeading: 'Every signal, and what it is worth',
+  weightsNote:
+    'Read straight out of the source rather than retyped, so this table cannot drift out of date. Positive numbers argue for a guess, negative against.',
+  clearDataLabel: 'Forget me',
+  clearDataDone: 'Cleared.',
+} as const
+
 export const CLOSING = {
   claim: 'Get in touch.',
   standfirst:

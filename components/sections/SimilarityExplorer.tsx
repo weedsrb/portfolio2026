@@ -7,6 +7,7 @@ import {
   COSINE_SOURCE,
   CUTOFF,
   CUTOFF_READING,
+  SCORE_AXIS,
   SIMILARITY_QUERY,
 } from '@/data/fixtures/similarity'
 
@@ -17,10 +18,10 @@ import {
  * the cutoff draggable so you can watch results cross the line.
  */
 
-const DOMAIN_MIN = 0.65
-const DOMAIN_MAX = 0.95
-
-const x = scaleLinear().domain([DOMAIN_MIN, DOMAIN_MAX]).range([0, 100]).clamp(true)
+const x = scaleLinear()
+  .domain([SCORE_AXIS.min, SCORE_AXIS.max])
+  .range([0, 100])
+  .clamp(true)
 
 export function SimilarityExplorer() {
   const cutoffPercent = x(CUTOFF)

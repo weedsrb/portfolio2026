@@ -1,4 +1,5 @@
 import { Page } from '@/components/layout/Grid'
+import { DebugMount } from '@/components/readout/DebugMount'
 import { Closing } from '@/components/sections/Closing'
 import { CohortExplorer } from '@/components/sections/CohortExplorer'
 import { Opening } from '@/components/sections/Opening'
@@ -41,6 +42,13 @@ export default function Home() {
       </main>
 
       <Closing />
+
+      {/*
+        Phase 3: renders only under ?debug=1. The readout must not claim a
+        hypothesis until the engine is actually observing something, which is
+        phase 5.
+      */}
+      <DebugMount />
     </Page>
   )
 }
