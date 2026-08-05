@@ -1,4 +1,5 @@
 import { Section } from '@/components/sections/Section'
+import { TrackedLink } from '@/components/TrackedLink'
 import { PERSON, SECTIONS, SERVICES } from '@/data/content'
 
 /**
@@ -36,12 +37,13 @@ export function ScopedWork() {
       </ul>
 
       <p className="mt-8 text-sm">
-        <a
+        <TrackedLink
           href={`mailto:${PERSON.email}`}
+          signal="outbound_email"
           className="border-b border-ink pb-0.5 hover:border-signal hover:text-signal"
         >
           Describe the problem
-        </a>
+        </TrackedLink>
         <span className="text-ink-muted">
           {' '}
           — I&rsquo;ll tell you if I&rsquo;m the wrong person for it.

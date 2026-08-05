@@ -499,6 +499,34 @@ describe('archetypal sessions', () => {
     expect(hypothesis.order).toEqual(SECTION_ORDERS.client)
   })
 
+  it('resolves every tagged link on arrival, on any device', () => {
+    // The whole point of a per-outreach link is that the page is already
+    // correct when it opens. A weak entry signal must never be able to drag one
+    // of these below the threshold — device class once did exactly that to
+    // ?ctx=client, which made the client link the only one that did not work.
+    const cases = [
+      ['ctx_ai', 'ai_product'],
+      ['ctx_data', 'data'],
+      ['ctx_client', 'client'],
+      ['ctx_eng', 'peer'],
+    ] as const
+
+    for (const [signal, persona] of cases) {
+      for (const device of ['device_wide_pointer', 'device_small_touch'] as const) {
+        const hypothesis = infer(
+          input([
+            { signal, strength: 1, at: T0 },
+            { signal: device, strength: 1, at: T0 },
+          ]),
+        )
+        expect(
+          `${signal}+${device}: ${hypothesis.state} ${hypothesis.leader}`,
+        ).toBe(`${signal}+${device}: resolved ${persona}`)
+        expect(hypothesis.order).toEqual(SECTION_ORDERS[persona])
+      }
+    }
+  })
+
   it('stays unresolved for someone who reads a little of everything', () => {
     // Genuinely ambiguous. The honest answer is "I don't know", and the page
     // must be willing to say so rather than pick the largest of four noises.

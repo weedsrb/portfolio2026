@@ -1,5 +1,7 @@
+import { AdaptiveSections, type SectionChild } from '@/components/AdaptiveSections'
 import { Page } from '@/components/layout/Grid'
-import { DebugMount } from '@/components/readout/DebugMount'
+import { DebugPanel } from '@/components/readout/DebugPanel'
+import { ReadoutMount } from '@/components/readout/ReadoutMount'
 import { Closing } from '@/components/sections/Closing'
 import { CohortExplorer } from '@/components/sections/CohortExplorer'
 import { Opening } from '@/components/sections/Opening'
@@ -9,17 +11,19 @@ import { ScopedWork } from '@/components/sections/ScopedWork'
 import { SimilarityExplorer } from '@/components/sections/SimilarityExplorer'
 import { TrackRecord } from '@/components/sections/TrackRecord'
 import { ValidationTrace } from '@/components/sections/ValidationTrace'
-import { DEFAULT_ORDER, type SectionId } from '@/lib/inference/personas'
+import { InferenceProvider } from '@/hooks/useInference'
+import { DEFAULT_ORDER } from '@/lib/inference/personas'
 
 /**
- * Server component. Everything static renders here, in the default order.
+ * Server component. Every section is rendered here, statically, in the default
+ * order — then handed to a client component that decides sequence.
  *
- * In phase 5 the inference layer hydrates and takes over ordering client-side.
- * First paint always shows this default order — no flash, no layout shift, and
- * the page stays complete and correct with JavaScript switched off entirely.
+ * First paint is always the default order: no flash, no layout shift, and the
+ * page is complete and readable with JavaScript switched off entirely. The
+ * adaptation is an enhancement on top of a page that already works.
  */
 
-const SECTION_COMPONENTS: Record<SectionId, () => React.JSX.Element> = {
+const SECTION_COMPONENTS = {
   1: ValidationTrace,
   2: QueryConsole,
   3: SimilarityExplorer,
@@ -27,28 +31,28 @@ const SECTION_COMPONENTS: Record<SectionId, () => React.JSX.Element> = {
   5: CohortExplorer,
   6: ScopedWork,
   7: TrackRecord,
-}
+} as const
 
 export default function Home() {
+  const sections: SectionChild[] = DEFAULT_ORDER.map((id) => {
+    const SectionComponent = SECTION_COMPONENTS[id]
+    return { id, node: <SectionComponent /> }
+  })
+
   return (
-    <Page>
-      <Opening />
+    <InferenceProvider>
+      <Page>
+        <Opening />
 
-      <main>
-        {DEFAULT_ORDER.map((id) => {
-          const SectionComponent = SECTION_COMPONENTS[id]
-          return <SectionComponent key={id} />
-        })}
-      </main>
+        <main>
+          <AdaptiveSections sections={sections} />
+        </main>
 
-      <Closing />
+        <Closing />
+      </Page>
 
-      {/*
-        Phase 3: renders only under ?debug=1. The readout must not claim a
-        hypothesis until the engine is actually observing something, which is
-        phase 5.
-      */}
-      <DebugMount />
-    </Page>
+      <ReadoutMount />
+      <DebugPanel />
+    </InferenceProvider>
   )
 }

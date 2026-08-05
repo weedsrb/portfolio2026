@@ -1,4 +1,5 @@
 import { Annotation, Row } from '@/components/layout/Grid'
+import { TrackedLink } from '@/components/TrackedLink'
 import {
   CLOSING,
   PERSON,
@@ -6,6 +7,7 @@ import {
   TODO_CV_FILE,
   TODO_LINKEDIN_URL,
 } from '@/data/content'
+import type { SignalId } from '@/lib/inference/signals'
 
 /**
  * Closing: contact, source, and the disclosure.
@@ -14,18 +16,33 @@ import {
  * rendered dead. A CV link that 404s costs more than no CV link.
  */
 
-type Link = { label: string; href: string; external?: boolean }
+type Link = {
+  label: string
+  href: string
+  external?: boolean
+  /** Set where following the link is itself strong evidence of intent. */
+  signal?: SignalId
+}
 
 function buildLinks(): Link[] {
   const links: Link[] = [
-    { label: PERSON.email, href: `mailto:${PERSON.email}` },
-    { label: PERSON.githubLabel, href: PERSON.github, external: true },
+    {
+      label: PERSON.email,
+      href: `mailto:${PERSON.email}`,
+      signal: 'outbound_email',
+    },
+    {
+      label: PERSON.githubLabel,
+      href: PERSON.github,
+      external: true,
+      signal: 'outbound_github',
+    },
   ]
   if (TODO_LINKEDIN_URL) {
     links.push({ label: 'LinkedIn', href: TODO_LINKEDIN_URL, external: true })
   }
   if (TODO_CV_FILE) {
-    links.push({ label: 'CV', href: TODO_CV_FILE })
+    links.push({ label: 'CV', href: TODO_CV_FILE, signal: 'outbound_cv' })
   }
   return links
 }
@@ -42,19 +59,34 @@ export function Closing() {
         </p>
 
         <ul className="mt-10 flex flex-wrap gap-x-8 gap-y-3">
-          {links.map((link) => (
-            <li key={link.href}>
-              <a
-                href={link.href}
-                {...(link.external
-                  ? { target: '_blank', rel: 'noreferrer noopener' }
-                  : {})}
-                className="border-b border-graticule pb-0.5 font-mono text-sm hover:border-signal hover:text-signal"
-              >
-                {link.label}
-              </a>
-            </li>
-          ))}
+          {links.map((link) => {
+            const className =
+              'border-b border-graticule pb-0.5 font-mono text-sm hover:border-signal hover:text-signal'
+            return (
+              <li key={link.href}>
+                {link.signal ? (
+                  <TrackedLink
+                    href={link.href}
+                    signal={link.signal}
+                    external={link.external}
+                    className={className}
+                  >
+                    {link.label}
+                  </TrackedLink>
+                ) : (
+                  <a
+                    href={link.href}
+                    {...(link.external
+                      ? { target: '_blank', rel: 'noreferrer noopener' }
+                      : {})}
+                    className={className}
+                  >
+                    {link.label}
+                  </a>
+                )}
+              </li>
+            )
+          })}
         </ul>
 
         {/*

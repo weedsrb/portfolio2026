@@ -52,6 +52,17 @@ export const SECTION_ORDERS: Record<Persona | 'default', readonly SectionId[]> =
 
 export const DEFAULT_ORDER = SECTION_ORDERS.default
 
+/** Short names for the re-rank announcement, so it reads as a sentence. */
+export const SECTIONS_LABEL: Record<SectionId, string> = {
+  1: 'the validation trace',
+  2: 'the query console',
+  3: 'the similarity explorer',
+  4: 'the queue worker',
+  5: 'cohort retention',
+  6: 'what I’d build for you',
+  7: 'the track record',
+}
+
 /** A zero vector, used as the starting point for weight accumulation. */
 export function zeroVector(): PersonaVector {
   return { ai_product: 0, data: 0, client: 0, peer: 0 }

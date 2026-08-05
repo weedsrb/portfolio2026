@@ -12,6 +12,8 @@
   --color-surface: #f5f7f7;
   --color-surface-sunk: #ecf0f0;
   --color-graticule: #dce4e4;
+  /* The same line, pre-blended toward the surface, for the background grid. */
+  --color-graticule-faint: #eef2f2;
   --color-ink: #10161a;
   --color-ink-muted: #5c6a70;
 
@@ -99,31 +101,18 @@ body {
   /*
    * The graticule. Aligned to the real layout grid rather than an arbitrary
    * rhythm, so it reads as measurement texture and never as decoration.
+   *
+   * The line colour is pre-blended toward the surface rather than being drawn
+   * at full strength and faded back with an overlay. The overlay version needed
+   * `body > * { position: relative }` to lift content above it, which silently
+   * broke `position: fixed` for any direct child of body — that is exactly how
+   * the readout ended up scrolling away with the page instead of staying put.
    */
   background-image:
-    linear-gradient(to right, var(--color-graticule) 1px, transparent 1px),
-    linear-gradient(to bottom, var(--color-graticule) 1px, transparent 1px);
+    linear-gradient(to right, var(--color-graticule-faint) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--color-graticule-faint) 1px, transparent 1px);
   background-size: 4rem 4rem;
   background-position: calc(var(--page-pad) - 1px) 0;
-  /* Subtle enough to read as texture. */
-  background-blend-mode: multiply;
-  opacity: 1;
-}
-
-body::before {
-  /* Fades the graticule out so it never competes with the text. */
-  content: '';
-  position: fixed;
-  inset: 0;
-  background: var(--color-surface);
-  opacity: 0.72;
-  pointer-events: none;
-  z-index: 0;
-}
-
-body > * {
-  position: relative;
-  z-index: 1;
 }
 
 ::selection {

@@ -208,7 +208,12 @@ const ENTRY_SIGNALS: SignalDefinition[] = [
     id: 'device_small_touch',
     label: 'Small touch screen',
     note: 'Read from screen size and pointer type only — no device fingerprinting. Reading on a phone leans casual rather than evaluative.',
-    weights: { ai_product: -0.1, data: -0.1, client: 0.35, peer: -0.25 },
+    /*
+     * Nudges toward `client` without arguing hard against anyone. Engineers
+     * read on phones too, and a -0.25 against `peer` was enough to stop a
+     * tagged /?ctx=eng link resolving for anyone on mobile.
+     */
+    weights: { ai_product: -0.05, data: -0.05, client: 0.3, peer: -0.1 },
     cap: 1.0,
     decay: 'none',
   },
@@ -216,7 +221,13 @@ const ENTRY_SIGNALS: SignalDefinition[] = [
     id: 'device_wide_pointer',
     label: 'Wide screen, mouse',
     note: 'Read from screen size and pointer type only. Sitting at a desk leans evaluative.',
-    weights: { ai_product: 0.2, data: 0.2, client: -0.15, peer: 0.2 },
+    /*
+     * Barely argues against `client` at all. It used to sit at -0.15, which was
+     * enough to drag a tagged /?ctx=client link below the resolve threshold —
+     * the weakest signal on the page cancelling the strongest one. Plenty of
+     * business owners read on a desktop; this should nudge, not veto.
+     */
+    weights: { ai_product: 0.15, data: 0.15, client: -0.05, peer: 0.15 },
     cap: 1.0,
     decay: 'none',
   },
