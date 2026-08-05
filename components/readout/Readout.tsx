@@ -3,7 +3,7 @@
 import { useId, useState } from 'react'
 
 import { READOUT } from '@/data/content'
-import { FieldSlot } from '@/components/readout/FieldSlot'
+import { BreathingField } from '@/components/readout/BreathingField'
 import { HowThisWorks } from '@/components/readout/HowThisWorks'
 import { OverrideChips } from '@/components/readout/OverrideChips'
 import { SignalList } from '@/components/readout/SignalList'
@@ -81,7 +81,7 @@ export function Readout({
     >
       <div className="p-4">
         <div className="flex items-start gap-3.5">
-          <FieldSlot confidence={state === 'unresolved' ? 0 : confidence} />
+          <BreathingField confidence={confidence} state={state} />
 
           <div className="min-w-0 flex-1">
             <p className="font-mono text-[10px] tracking-wider text-instrument-muted uppercase">
