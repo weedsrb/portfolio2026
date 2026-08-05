@@ -9,17 +9,17 @@
 import type { SectionId } from '@/lib/inference/personas'
 
 /* -------------------------------------------------------------------------- */
-/* Still to supply                                                             */
+/* Identity and links                                                          */
 /*                                                                             */
-/* These are deliberately null rather than guessed. Components render nothing   */
-/* at all when a value is missing — a broken link is worse than no link.        */
+/* Anything still unknown stays null rather than guessed. Components render     */
+/* nothing at all when a value is missing — a broken link is worse than none.   */
 /* -------------------------------------------------------------------------- */
 
 /** TODO(waleed): LinkedIn profile URL. */
 export const TODO_LINKEDIN_URL: string | null = null
 
-/** TODO(waleed): path to the CV in /public, e.g. '/waleed-barghouthi-cv.pdf'. */
-export const TODO_CV_FILE: string | null = null
+/** Served from /public. */
+export const CV_FILE: string | null = '/waleed-barghouthi-cv.pdf'
 
 /**
  * TODO(waleed): current status of the contract/schedule risk retrieval project.
@@ -43,6 +43,7 @@ export const PERSON = {
 } as const
 
 export const SITE = {
+  url: 'https://waleedbarghouthi.com',
   description:
     'Waleed Barghouthi builds AI product and data systems. This page works out who you probably are, shows its reasoning, and lets you overrule it.',
   /** Publishing the source of a site that profiles you is the whole point. */

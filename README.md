@@ -1,36 +1,100 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# waleedbarghouthi.com
 
-## Getting Started
+A portfolio that works out who its visitor probably is, shows its reasoning, and
+lets them overrule it.
 
-First, run the development server:
+The page reads passive signals — where you arrived from, what you linger on,
+what you actually operate — scores them, and re-orders its evidence sections to
+match. A fixed readout in the corner shows the current hypothesis, the
+confidence, the signals behind it, and a one-tap override.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+That is the same rule the product it describes runs on: the model proposes, the
+application decides, the human confirms.
+
+## It is not an AI
+
+There is no language model here, no API call, and no network request. The
+inference is a **deterministic log-odds scoring model**:
+
+```
+score[persona] = Σ weight(signal, persona) × strength(signal) × decay(age)
+P              = softmax(score)
+confidence     = 1 − entropy(P) / log(4)
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Confidence is the *sharpness* of the distribution, not the leader's raw
+probability. Two personas tied near 45% therefore reports low confidence — which
+is true, whereas `max(P)` would report 0.45 and imply near-certainty about the
+leader.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Every output is explainable. The readout lists which signals moved the number
+and by how much, read from the same computation that produced the number.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Privacy
 
-## Learn More
+- Zero network requests, zero cookies, zero third-party analytics.
+- `localStorage` holds one key: a coarse persona label and a timestamp.
+- No IP handling, no fingerprinting, no user-agent parsing beyond a media query
+  for pointer type.
+- The site's own "How this works" panel lists every signal and its real weights,
+  generated from the source rather than retyped, plus a button that wipes the
+  stored value.
 
-To learn more about Next.js, take a look at the following resources:
+## Layout
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```
+app/                     route, layout, design tokens
+lib/inference/           the engine — pure, no DOM, no side effects
+  personas.ts            four personas, one full section ordering each
+  signals.ts             the signal registry: weights, caps, strengths
+  engine.ts              scoring, softmax, entropy, hysteresis, rate limiting
+  decay.ts               grace period, then half-life
+  entry.ts               referrer / ?ctx= / device, read once per page load
+lib/motion/flip.ts       FLIP re-rank and the below-fold constraint
+hooks/useInference.tsx   signal collection and the engine loop
+components/sections/     one per evidence module
+components/readout/      the readout, its signal list, the disclosure panel
+data/                    all copy and numbers, typed
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+`lib/inference/engine.ts` is pure: signals in, distribution out. It is the part
+worth reading.
 
-## Deploy on Vercel
+## Two rules the code is held to
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+**The signal rule.** The accent colour may only be applied to a value that is
+currently changing or can change. Accent on an inert element is a bug, not a
+style choice.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+**Nothing above the fold moves.** A re-rank only permutes sections entirely
+below the viewport top. A page that pulls text out from under someone's eyes is
+infuriating, and no amount of spring tuning fixes that.
+
+Both are enforced in review; the second is also unit-tested.
+
+## Running it
+
+```bash
+pnpm install
+pnpm dev          # http://localhost:3000
+pnpm test         # engine + below-fold constraint
+pnpm typecheck
+pnpm build
+```
+
+`?debug=1` renders the live score matrix, every signal's contribution, and the
+current order.
+
+Tagged links seed a prior so the page is already correct on arrival:
+`?ctx=ai`, `?ctx=data`, `?ctx=client`, `?ctx=eng`. The parameter is stripped
+from the URL once read, so a forwarded link never carries someone else's
+context.
+
+## Status
+
+Done: the engine and its tests, the full static site, the readout, and the live
+wiring. To come: the confidence-driven breathing field in the readout, and
+making the seven evidence modules operable rather than rendered stills.
+
+The datasets behind the SQL console and the cohort chart are synthetic, shaped
+like the real schemas, and labelled as synthetic on the page.

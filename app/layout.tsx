@@ -41,8 +41,22 @@ const plexArabic = IBM_Plex_Sans_Arabic({
 })
 
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE.url),
   title: `${PERSON.name} — ${PERSON.role}`,
   description: SITE.description,
+  openGraph: {
+    type: 'website',
+    url: SITE.url,
+    siteName: PERSON.name,
+    title: `${PERSON.name} — ${PERSON.role}`,
+    description: SITE.description,
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: `${PERSON.name} — ${PERSON.role}`,
+    description: SITE.description,
+  },
+  alternates: { canonical: '/' },
 }
 
 export default function RootLayout({ children }: LayoutProps<'/'>) {
