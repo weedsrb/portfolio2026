@@ -1,0 +1,236 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-08-05T00:00:00.000Z",
+  "title": "Design System: waleedbarghouthi.com",
+  "extensions": {
+    "colorMeta": {
+      "signal": {
+        "role": "primary",
+        "displayName": "Signal Teal",
+        "canonical": "#0e8f76",
+        "tonalRamp": ["#04211b", "#063a2f", "#085444", "#0b6f5a", "#0e8f76", "#3fb59d", "#7ed3c2", "#c4ece3"]
+      },
+      "phosphor": {
+        "role": "secondary",
+        "displayName": "Phosphor",
+        "canonical": "#4fe3c1",
+        "tonalRamp": ["#0b271f", "#114338", "#186052", "#1f7e6c", "#28a189", "#35c3a6", "#4fe3c1", "#b6f5e7"]
+      },
+      "indigo": {
+        "role": "tertiary",
+        "displayName": "Indigo",
+        "canonical": "#6c7bff",
+        "tonalRamp": ["#111536", "#1b2258", "#27317c", "#3542a2", "#4757c8", "#5b6ae6", "#6c7bff", "#c3c9ff"]
+      },
+      "surface": {
+        "role": "neutral",
+        "displayName": "Paper",
+        "canonical": "#f5f7f7",
+        "tonalRamp": ["#10161a", "#263034", "#3d4a4f", "#5c6a70", "#8a999e", "#b9c6c9", "#dce4e4", "#f5f7f7"]
+      },
+      "surface-sunk": {
+        "role": "neutral",
+        "displayName": "Sunk Paper",
+        "canonical": "#ecf0f0",
+        "tonalRamp": ["#0e1315", "#222b2e", "#394547", "#556265", "#828f92", "#b2bfc0", "#d5dddd", "#ecf0f0"]
+      },
+      "graticule": {
+        "role": "neutral",
+        "displayName": "Graticule",
+        "canonical": "#dce4e4",
+        "tonalRamp": ["#0d1112", "#1f2627", "#36403f", "#525d5d", "#7f8a8a", "#aeb9b9", "#dce4e4", "#eef2f2"]
+      },
+      "graticule-faint": {
+        "role": "neutral",
+        "displayName": "Faint Graticule",
+        "canonical": "#eef2f2"
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Ink",
+        "canonical": "#10161a"
+      },
+      "ink-muted": {
+        "role": "neutral",
+        "displayName": "Muted Ink",
+        "canonical": "#5c6a70"
+      },
+      "instrument-bg": {
+        "role": "neutral",
+        "displayName": "Instrument Black",
+        "canonical": "#0a0f12",
+        "tonalRamp": ["#0a0f12", "#111a1f", "#1a262c", "#233036", "#3a4a52", "#5f7079", "#93a5ac", "#e8f0f0"]
+      },
+      "instrument-ink": {
+        "role": "neutral",
+        "displayName": "Instrument Ink",
+        "canonical": "#e8f0f0"
+      },
+      "instrument-muted": {
+        "role": "neutral",
+        "displayName": "Instrument Muted",
+        "canonical": "#93a5ac"
+      },
+      "instrument-rule": {
+        "role": "neutral",
+        "displayName": "Instrument Rule",
+        "canonical": "#233036"
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Section claims only, at large sizes. Fraunces with SOFT 20 / WONK 1. Never enters UI."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Subordinate claims and the opening."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Sub-section and panel headings, in Plex Sans 600."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Standfirsts, notes, and running prose. Capped at 68ch."
+      },
+      "label": {
+        "displayName": "Annotation",
+        "purpose": "Instrument annotation: uppercase letterspaced mono naming a control, an axis, or a unit."
+      }
+    },
+    "shadows": [],
+    "motion": [
+      {
+        "name": "reduced-motion-contract",
+        "value": "@media (prefers-reduced-motion: reduce) { animation-duration: 0.01ms; transition-duration: 0.01ms; scroll-behavior: auto }",
+        "purpose": "Global and non-negotiable. Every animation in the system is accountable to it, including the FLIP re-rank."
+      },
+      {
+        "name": "above-the-fold-constraint",
+        "value": "re-rank permutes only sections entirely below the viewport top",
+        "purpose": "Unit-tested in lib/motion/flip.ts. Nothing moves out from under a reader's eyes."
+      }
+    ],
+    "breakpoints": [
+      { "name": "narrow", "value": "gutter collapses to 0rem, page-pad drops to 1.25rem" },
+      { "name": "md", "value": "readout detaches to a 22rem floating panel at right-6 bottom-6" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Panel",
+      "kind": "card",
+      "refersTo": "panel",
+      "description": "The default container: a plain rectangle delimited by a hairline, titled with a mono annotation.",
+      "html": "<section class=\"ds-panel\"><p class=\"ds-annotation\">Controls</p><div class=\"ds-panel-body\">Panel content</div></section>",
+      "css": ".ds-panel { background: var(--color-surface, #f5f7f7); color: var(--color-ink, #10161a); border: 1px solid var(--color-graticule, #dce4e4); border-radius: 0; } .ds-panel-body { padding: 16px; font-family: 'IBM Plex Sans', system-ui, sans-serif; font-size: 1rem; line-height: 1.6; } .ds-annotation { margin: 0; padding: 12px 16px; border-bottom: 1px solid var(--color-graticule, #dce4e4); font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-ink-muted, #5c6a70); }"
+    },
+    {
+      "name": "Annotation Label",
+      "kind": "chip",
+      "refersTo": "annotation",
+      "description": "The small letterspaced mono label naming a control, an axis, or a unit.",
+      "html": "<span class=\"ds-annotation-label\">k — chunks considered</span>",
+      "css": ".ds-annotation-label { font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-ink-muted, #5c6a70); }"
+    },
+    {
+      "name": "Live Value",
+      "kind": "custom",
+      "refersTo": "live-value",
+      "description": "A computed figure that moves. The single sanctioned use of Signal Teal on the light surface.",
+      "html": "<span class=\"ds-live-value\">0.72</span>",
+      "css": ".ds-live-value { font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 0.875rem; font-variant-numeric: tabular-nums; color: var(--color-signal, #0e8f76); }"
+    },
+    {
+      "name": "Range Control",
+      "kind": "input",
+      "refersTo": "panel",
+      "description": "A labelled range whose current value is rendered live in Signal Teal beside its annotation.",
+      "html": "<label class=\"ds-range\"><span class=\"ds-range-head\"><span class=\"ds-annotation-label\">Cutoff</span><span class=\"ds-live-value\">0.72</span></span><input type=\"range\" min=\"0\" max=\"100\" value=\"72\" class=\"ds-range-input\" aria-describedby=\"ds-range-help\"><span id=\"ds-range-help\" class=\"ds-range-help\">Past this score you retrieve noise that reads plausibly.</span></label>",
+      "css": ".ds-range { display: block; } .ds-range-head { display: flex; align-items: baseline; justify-content: space-between; } .ds-range-input { margin-top: 8px; width: 100%; accent-color: var(--color-signal, #0e8f76); } .ds-range-input:focus-visible { outline: 2px solid var(--color-signal, #0e8f76); outline-offset: 3px; border-radius: 1px; } .ds-range-help { display: block; margin-top: 4px; font-family: 'IBM Plex Sans', system-ui, sans-serif; font-size: 0.75rem; color: var(--color-ink-muted, #5c6a70); } .ds-annotation-label { font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-ink-muted, #5c6a70); } .ds-live-value { font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 0.875rem; font-variant-numeric: tabular-nums; color: var(--color-signal, #0e8f76); }"
+    },
+    {
+      "name": "Readout Panel",
+      "kind": "custom",
+      "refersTo": "readout",
+      "description": "The signature component: the one dark, lit object on a light page. Shows the current hypothesis, its confidence, and a one-tap override.",
+      "html": "<aside class=\"ds-readout\"><p class=\"ds-readout-kicker\">Current hypothesis</p><p class=\"ds-readout-claim\"><span class=\"ds-readout-muted\">You're here for</span> <span class=\"ds-readout-live\">the engineering</span></p><div class=\"ds-readout-row\"><span class=\"ds-readout-kicker\">Confidence</span><span class=\"ds-readout-live ds-readout-num\">0.68</span><button class=\"ds-readout-btn\">Override</button></div></aside>",
+      "css": ".ds-readout { background: var(--color-instrument-bg, #0a0f12); color: var(--color-instrument-ink, #e8f0f0); border: 1px solid var(--color-instrument-rule, #233036); border-radius: 0; padding: 16px; width: 22rem; max-width: 100%; font-family: 'IBM Plex Sans', system-ui, sans-serif; } .ds-readout-kicker { margin: 0; font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-instrument-muted, #93a5ac); } .ds-readout-claim { margin: 6px 0 0; font-size: 0.875rem; line-height: 1.3; } .ds-readout-muted { color: var(--color-instrument-muted, #93a5ac); } .ds-readout-live { color: var(--color-phosphor, #4fe3c1); } .ds-readout-num { font-family: 'IBM Plex Mono', ui-monospace, monospace; font-variant-numeric: tabular-nums; font-size: 0.875rem; } .ds-readout-row { display: flex; align-items: center; gap: 12px; margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--color-instrument-rule, #233036); } .ds-readout-btn { margin-left: auto; background: none; border: 1px solid var(--color-instrument-rule, #233036); border-radius: 0; color: var(--color-instrument-ink, #e8f0f0); font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; padding: 6px 10px; cursor: pointer; transition: border-color 0.2s, color 0.2s; } .ds-readout-btn:hover { border-color: var(--color-phosphor, #4fe3c1); color: var(--color-phosphor, #4fe3c1); } .ds-readout-btn:focus-visible { outline: 2px solid var(--color-phosphor, #4fe3c1); outline-offset: 3px; border-radius: 1px; }"
+    },
+    {
+      "name": "Hairline Divider",
+      "kind": "custom",
+      "refersTo": "panel",
+      "description": "A rule that behaves like a plot axis. The system's primary separator, in place of shadows.",
+      "html": "<hr class=\"ds-hairline\">",
+      "css": ".ds-hairline { border: 0; border-top: 1px solid var(--color-graticule, #dce4e4); margin: 0; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Instrument",
+    "overview": "This is precision measurement equipment, not a page about a person. The vocabulary is plotting surfaces, fine graticule, tabular numerals, and hairlines that behave like axes. Nothing is styled to look considered; things are ruled, aligned, and measured because the content is data and the reader is expected to operate it. The system earns trust the way an instrument does — by being legible, calibrated, and honest about what it does not know.\n\nThe page is a light, cool paper field carrying one dark, lit object: the readout panel fixed in the corner. That contrast is the entire composition. Everything on the light surface is ink, muted ink, or graticule; the only saturated colour that appears there is Signal Teal, and only on a value that is currently moving. Inside the readout, a separate and deliberately contained palette — phosphor and indigo — does work that never leaks onto the page. That containment is what makes the panel read as a component doing a job rather than as decoration.\n\nDepth is achieved without a single shadow. There are no shadows and effectively no corner radii in this system; separation comes from hairline rules and a one-step tonal drop to a sunk surface. A grid of faint graticule lines underlies the page like plotting paper. The result is flat, quiet, and dense with information, and it should stay that way.",
+    "keyCharacteristics": [
+      "Flat by construction — zero shadows, zero radii, hairlines as axes",
+      "One accent, rationed by rule, never decorative",
+      "Editorial serif for claims; sans for reading; mono for every measured value",
+      "A single dark instrument on a light field, with a contained sub-palette",
+      "Tabular, aligned, and dense — information over atmosphere"
+    ],
+    "rules": [
+      {
+        "name": "The Signal Rule",
+        "body": "Signal Teal may only be applied to a value that is currently changing or can change. A static heading in signal teal is a lie. There are exactly two sanctioned uses: a computed value that moves, and interactive state. If you find Signal Teal on an inert element, that is a bug, not a style choice.",
+        "section": "colors"
+      },
+      {
+        "name": "The Containment Rule",
+        "body": "Phosphor and Indigo never appear outside the readout panel. Their confinement is what makes the panel read as an instrument rather than as a decorative flourish.",
+        "section": "colors"
+      },
+      {
+        "name": "The Measured Value Rule",
+        "body": "Every number the reader is meant to compare is set in Plex Mono. Numerals that sit in a column must be tabular and must align. A figure in the sans is a figure nobody is expected to read against another figure.",
+        "section": "typography"
+      },
+      {
+        "name": "The Display-Is-For-Claims Rule",
+        "body": "Fraunces appears only at display and headline sizes, only on the claims. It never enters a control, a label, or a panel.",
+        "section": "typography"
+      },
+      {
+        "name": "The Above-The-Fold Rule",
+        "body": "A re-rank may only permute sections that are entirely below the viewport top. A page that pulls text out from under someone's eyes is infuriating, and no amount of spring tuning fixes that. This is unit-tested, not merely reviewed.",
+        "section": "layout"
+      },
+      {
+        "name": "The Flat-Field Rule",
+        "body": "Separation is drawn, not lit. If a boundary needs to read, give it a hairline or a tonal step. Adding a shadow to this system breaks the instrument metaphor at its root.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Square Rule",
+        "body": "Nothing gets a corner radius. A rounded card in this system reads as an import from a different, friendlier product.",
+        "section": "shapes"
+      }
+    ],
+    "dos": [
+      "Do apply Signal Teal (#0e8f76) only to a value that is moving or a control responding to input. Two sanctioned uses, no others.",
+      "Do set every comparable number in IBM Plex Mono, tabular and aligned.",
+      "Do separate regions with a 1px Graticule hairline or a single tonal step to Sunk Paper.",
+      "Do keep Fraunces at display and headline sizes, on claims only.",
+      "Do label controls with uppercase letterspaced mono annotation in Muted Ink.",
+      "Do keep the :focus-visible ring at 2px Signal Teal with 3px offset on every interactive element.",
+      "Do cap running prose at 68ch."
+    ],
+    "donts": [
+      "Don't add a box-shadow anywhere. The system has none by construction.",
+      "Don't give anything a corner radius. The sole exception is the 1px on the focus ring.",
+      "Don't put Signal Teal on a heading, an icon, a border, or any inert element. That is a bug, not a style choice.",
+      "Don't use Phosphor or Indigo anywhere outside the readout panel.",
+      "Don't animate or re-order anything that is above the viewport top.",
+      "Don't introduce a fourth typeface, or use Fraunces inside UI.",
+      "Don't replace hairline-delimited panels with filled, rounded cards."
+    ]
+  }
+}
