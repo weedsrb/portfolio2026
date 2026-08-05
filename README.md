@@ -90,11 +90,25 @@ Tagged links seed a prior so the page is already correct on arrival:
 from the URL once read, so a forwarded link never carries someone else's
 context.
 
-## Status
+## The evidence modules
 
-Done: the engine and its tests, the full static site, the readout, and the live
-wiring. To come: the confidence-driven breathing field in the readout, and
-making the seven evidence modules operable rather than rendered stills.
+Each claim ships with something you can operate, not a paragraph asserting it.
+
+| | Claim | What you can do |
+|---|---|---|
+| 1 | The model proposes, my code decides | Edit the parsed order and watch `validateOrder()` refuse it |
+| 2 | I write SQL against real data | Write and run SQL against 1,002 rows, on a hand-written engine |
+| 3 | Retrieval, not the buzzword | Move k and the cutoff, watch boilerplate cross the line |
+| 4 | Production systems, not demos | Kill a worker mid-lease and trace the recovery |
+| 5 | Data into decisions | Change the definition of "retained" and watch the number move |
+| 6 | What I'd build for you | Scoped work, with timelines that are what it took |
+| 7 | Track record | Work, study and cities on one axis — the overlap is the information |
 
 The datasets behind the SQL console and the cohort chart are synthetic, shaped
-like the real schemas, and labelled as synthetic on the page.
+like the real schemas, generated from a fixed seed, and labelled as synthetic
+on the page.
+
+## Status
+
+Everything above is built. Still open: a couple of links in `data/content.ts`
+that are `null` until supplied, rather than guessed at.
