@@ -11,7 +11,7 @@ import { SECTIONS, TIMELINE, TOOLS } from '@/data/content'
  */
 export function TrackRecord() {
   return (
-    <Section content={SECTIONS[7]}>
+    <Section content={SECTIONS[7]} bare>
       <Panel label="Timeline">
         <div className="px-4 py-6">
           <TimelineChart />

@@ -12,7 +12,7 @@ import { PERSON, SECTIONS, SERVICES } from '@/data/content'
  */
 export function ScopedWork() {
   return (
-    <Section content={SECTIONS[6]}>
+    <Section content={SECTIONS[6]} bare>
       <ul className="border-t border-graticule">
         {SERVICES.map((service) => (
           <li

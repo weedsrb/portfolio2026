@@ -11,7 +11,7 @@ import { COSINE_SOURCE } from '@/data/fixtures/similarity'
  */
 export function SimilarityExplorer() {
   return (
-    <Section content={SECTIONS[3]}>
+    <Section content={SECTIONS[3]} bare>
       <SimilarityControls />
 
       <Panel label="cosine.ts" className="mt-8">

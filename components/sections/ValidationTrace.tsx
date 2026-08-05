@@ -10,7 +10,7 @@ import { SECTIONS } from '@/data/content'
  */
 export function ValidationTrace() {
   return (
-    <Section content={SECTIONS[1]}>
+    <Section content={SECTIONS[1]} bare>
       <ValidationSandbox />
     </Section>
   )

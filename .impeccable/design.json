@@ -1,0 +1,241 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-08-05T12:45:00.000Z",
+  "title": "Design System: waleedbarghouthi.com",
+  "extensions": {
+    "colorMeta": {
+      "signal": {
+        "role": "primary",
+        "displayName": "Vermilion",
+        "canonical": "#b8330d",
+        "tonalRamp": [
+          "#2b0c03",
+          "#4a1506",
+          "#68200a",
+          "#8a2a0c",
+          "#b8330d",
+          "#d4562d",
+          "#e8906f",
+          "#f6d2c4"
+        ]
+      },
+      "signal-display": {
+        "role": "primary",
+        "displayName": "Display Vermilion",
+        "canonical": "#e8471f",
+        "tonalRamp": [
+          "#3a1006",
+          "#5d1c09",
+          "#82290d",
+          "#a83612",
+          "#cc3f18",
+          "#e8471f",
+          "#f2825f",
+          "#fac8b6"
+        ]
+      },
+      "surface": {
+        "role": "neutral",
+        "displayName": "Bone",
+        "canonical": "#eceae5",
+        "tonalRamp": [
+          "#14120f",
+          "#2b2823",
+          "#443f38",
+          "#605a51",
+          "#8d867b",
+          "#b6afa4",
+          "#d5d1c8",
+          "#eceae5"
+        ]
+      },
+      "surface-sunk": {
+        "role": "neutral",
+        "displayName": "Sunk Bone",
+        "canonical": "#e2dfd8"
+      },
+      "surface-raised": {
+        "role": "neutral",
+        "displayName": "Raised",
+        "canonical": "#fffefb"
+      },
+      "graticule": {
+        "role": "neutral",
+        "displayName": "Graticule",
+        "canonical": "#d5d1c8"
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Ink",
+        "canonical": "#14120f"
+      },
+      "ink-muted": {
+        "role": "neutral",
+        "displayName": "Muted Ink",
+        "canonical": "#6d675d"
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "The claim in the first viewport. Anton, one weight, one per page."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "The claim atop each work block."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Standfirsts and running prose, capped at 44ch."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Status line, control labels, units. Azeret Mono, uppercase, tracked."
+      }
+    },
+    "shadows": [],
+    "motion": [
+      {
+        "name": "pill-settle",
+        "value": "transform .22s cubic-bezier(.2,.8,.2,1)",
+        "purpose": "Resting tilt straightens and lifts on hover, focus, and selection."
+      },
+      {
+        "name": "reduced-motion-contract",
+        "value": "@media (prefers-reduced-motion: reduce) { animation-duration:.01ms; transition-duration:.01ms }",
+        "purpose": "Global and non-negotiable, including the FLIP re-rank."
+      },
+      {
+        "name": "above-the-fold-constraint",
+        "value": "re-rank permutes only sections entirely below the viewport top",
+        "purpose": "Unit-tested in lib/motion/flip.ts."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "sm",
+        "value": "640px"
+      },
+      {
+        "name": "lg",
+        "value": "1024px \u2014 work blocks split to 12 columns"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Pill",
+      "kind": "button",
+      "refersTo": "pill",
+      "description": "The universal control. Every interactive element on the page is one.",
+      "html": "<button class=\"ds-pill\">Open the query console <svg width=\"13\" height=\"13\" viewBox=\"0 0 16 16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\"><path d=\"M8 3.5v9M4.5 9l3.5 3.5L11.5 9\"/></svg></button>",
+      "css": ".ds-pill{display:inline-flex;align-items:center;gap:.5rem;border-radius:999px;border:1px solid var(--color-ink,#14120f);background:var(--color-surface-raised,#fffefb);color:var(--color-ink,#14120f);padding:.6rem 1.05rem;font-family:'Azeret Mono',ui-monospace,monospace;font-size:.75rem;letter-spacing:.04em;cursor:pointer;transform:rotate(-1.8deg);transition:transform .22s cubic-bezier(.2,.8,.2,1),background .22s ease,color .22s ease}.ds-pill:hover,.ds-pill:focus-visible{transform:rotate(0) translateY(-2px)}.ds-pill:focus-visible{outline:2px solid var(--color-signal,#b8330d);outline-offset:3px}"
+    },
+    {
+      "name": "Pill, chosen",
+      "kind": "button",
+      "refersTo": "pill-chosen",
+      "description": "The declared lens. The only pill entitled to the accent.",
+      "html": "<button class=\"ds-pill-on\">I'm hiring</button>",
+      "css": ".ds-pill-on{display:inline-flex;align-items:center;gap:.5rem;border-radius:999px;border:1px solid var(--color-signal,#b8330d);background:var(--color-signal,#b8330d);color:#fff;padding:.6rem 1.05rem;font-family:'Azeret Mono',ui-monospace,monospace;font-size:.75rem;letter-spacing:.04em;transform:rotate(0)}"
+    },
+    {
+      "name": "Primary action",
+      "kind": "button",
+      "refersTo": "cta",
+      "description": "Filled vermilion, top-right, present from the first pixel.",
+      "html": "<a class=\"ds-cta\" href=\"#\">Get in touch</a>",
+      "css": ".ds-cta{display:inline-block;border-radius:999px;background:var(--color-signal,#b8330d);color:#fff;padding:.625rem 1.25rem;font-family:'Archivo',system-ui,sans-serif;font-weight:600;font-size:.875rem;text-decoration:none;transition:transform .2s ease}.ds-cta:hover{transform:translateY(-2px)}"
+    },
+    {
+      "name": "Floating nav",
+      "kind": "nav",
+      "refersTo": "pill",
+      "description": "Raised, blurred, centred, hairline border.",
+      "html": "<nav class=\"ds-nav\"><a class=\"on\" href=\"#\">Work</a><a href=\"#\">Systems</a><a href=\"#\">About</a></nav>",
+      "css": ".ds-nav{display:inline-flex;gap:2px;border-radius:999px;border:1px solid var(--color-graticule,#d5d1c8);background:rgba(255,254,251,.85);backdrop-filter:blur(12px);padding:6px}.ds-nav a{border-radius:999px;padding:.5rem 1rem;font-family:'Archivo',system-ui,sans-serif;font-size:.875rem;color:var(--color-ink,#14120f);text-decoration:none;transition:background .2s}.ds-nav a:hover{background:var(--color-surface-sunk,#e2dfd8)}"
+    },
+    {
+      "name": "Work block",
+      "kind": "card",
+      "refersTo": "pill",
+      "description": "Hairline top rule, claim left, reading copy right and lower.",
+      "html": "<article class=\"ds-block\"><h2>I write SQL against real schemas.</h2><div><p>Multi-tenant, ownership-aware, and enforced in the database as well as the API.</p></div></article>",
+      "css": ".ds-block{border-top:1px solid var(--color-graticule,#d5d1c8);padding:4rem 0;display:grid;gap:2.5rem;grid-template-columns:7fr 5fr}.ds-block h2{margin:0;font-family:'Anton',Arial Black,sans-serif;font-weight:400;font-size:clamp(2.1rem,5.4vw,4.4rem);line-height:.92;letter-spacing:-.02em;text-transform:uppercase;color:var(--color-ink,#14120f)}.ds-block p{margin:0;padding-top:3.5rem;font-family:'Archivo',system-ui,sans-serif;font-size:1.125rem;line-height:1.625;max-width:44ch}"
+    },
+    {
+      "name": "Status line",
+      "kind": "custom",
+      "refersTo": "pill",
+      "description": "City, live local time, availability. Never hidden on mobile.",
+      "html": "<p class=\"ds-status\">Ramallah &middot; 12:38 &middot; Open to roles</p>",
+      "css": ".ds-status{margin:0;font-family:'Azeret Mono',ui-monospace,monospace;font-size:.6875rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--color-ink-muted,#6d675d)}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Studio Page",
+    "overview": "A large, confident studio page that says who this is in one line, states its claim at the scale of a wordmark, and then asks the visitor a question. The whole system exists to make one interaction feel inevitable: you say why you came, and the page commits to that answer.\\n\\nThe ground is warm bone \u2014 not cool paper, not near-black. Against it, near-black ink and exactly one vermilion. Everything is enormous or quiet; there is no middle register.\\n\\nDepth is drawn, not lit. No shadows, and no radii except the pills, which are fully round by rule.",
+    "keyCharacteristics": [
+      "Warm bone ground with real grain, never a flat white",
+      "One vermilion, split into a text role and a display role by contrast",
+      "Anton enormous for claims; Archivo for reading; Azeret for every measured value",
+      "Every control is a pill; nothing else is round",
+      "Skim first, operate on request \u2014 no instrument opens uninvited"
+    ],
+    "rules": [
+      {
+        "name": "The Signal Rule",
+        "body": "Vermilion may only be applied to something that is currently changing, can change, or has just been chosen. On an inert element it is a bug, not a style choice.",
+        "section": "colors"
+      },
+      {
+        "name": "The Two Vermilions Rule",
+        "body": "The split between --signal and --signal-display is a contrast rule, not a taste one. Under 24px, or under white text, it takes --signal. There is no third vermilion.",
+        "section": "colors"
+      },
+      {
+        "name": "The One Accent Rule",
+        "body": "Colour marks the choice, never the menu. An earlier build gave each lens pill its own hue, which drained the accent from the one actually chosen.",
+        "section": "colors"
+      },
+      {
+        "name": "The Measured Value Rule",
+        "body": "Every number a reader is meant to compare is set in Azeret Mono, tabular, and aligned.",
+        "section": "typography"
+      },
+      {
+        "name": "The Display-Is-For-Claims Rule",
+        "body": "Anton appears only on claims, at display or headline size. Never in a control, label, pill, or panel.",
+        "section": "typography"
+      },
+      {
+        "name": "The Skim-First Rule",
+        "body": "Every claim must be readable, and its proof comprehensible, without operating anything. Instruments open on request and unmount when closed.",
+        "section": "layout"
+      },
+      {
+        "name": "The Flat-Field Rule",
+        "body": "Separation is drawn, not lit. Adding a box-shadow to this system is a defect.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do keep exactly one accent, and spend it on what is live or chosen.",
+      "Do take --signal (#b8330d) for anything under 24px or under white text.",
+      "Do set every comparable number in Azeret Mono, tabular.",
+      "Do make every interactive control a pill at 999px.",
+      "Do let each claim read fully before anything needs operating.",
+      "Do keep the status line and the primary action in the first viewport at every width.",
+      "Do draw marks as SVG at one stroke weight."
+    ],
+    "donts": [
+      "Don't add a box-shadow, or any radius between 0 and 999px.",
+      "Don't put vermilion on an inert element, or the display vermilion on small text.",
+      "Don't give the unchosen options colour.",
+      "Don't use Anton for anything but a claim.",
+      "Don't open an instrument the visitor did not ask for.",
+      "Don't number the work blocks \u2014 a declared lens re-orders them, so any fixed index becomes a lie.",
+      "Don't substitute a Unicode character for an icon."
+    ]
+  }
+}

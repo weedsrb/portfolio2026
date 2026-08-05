@@ -5,7 +5,7 @@ import {
   PERSON,
   SITE,
   CV_FILE,
-  TODO_LINKEDIN_URL,
+  LINKEDIN_URL,
 } from '@/data/content'
 import type { SignalId } from '@/lib/inference/signals'
 
@@ -38,8 +38,8 @@ function buildLinks(): Link[] {
       signal: 'outbound_github',
     },
   ]
-  if (TODO_LINKEDIN_URL) {
-    links.push({ label: 'LinkedIn', href: TODO_LINKEDIN_URL, external: true })
+  if (LINKEDIN_URL) {
+    links.push({ label: 'LinkedIn', href: LINKEDIN_URL, external: true })
   }
   if (CV_FILE) {
     links.push({ label: 'CV', href: CV_FILE, signal: 'outbound_cv' })
