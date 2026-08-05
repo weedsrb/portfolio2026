@@ -11,7 +11,7 @@ import { SECTIONS } from '@/data/content'
  */
 export function QueryConsole() {
   return (
-    <Section content={SECTIONS[2]}>
+    <Section content={SECTIONS[2]} bare>
       <SqlConsole />
     </Section>
   )

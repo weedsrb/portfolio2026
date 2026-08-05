@@ -27,7 +27,21 @@ import {
 
 export type SectionChild = { id: SectionId; node: ReactNode }
 
-export function AdaptiveSections({ sections }: { sections: SectionChild[] }) {
+export function AdaptiveSections({
+  sections,
+  desiredOrder,
+  reason,
+}: {
+  sections: SectionChild[]
+  /**
+   * An explicit ordering, when the visitor has declared one. Omitted, the
+   * inference engine's hypothesis drives the page as it always did — so this
+   * component serves both the declared path and the inferred exhibit.
+   */
+  desiredOrder?: readonly SectionId[]
+  /** How the announcement names the cause, e.g. "for hiring". */
+  reason?: string
+}) {
   const { hypothesis } = useInference()
   const [order, setOrder] = useState<readonly SectionId[]>(DEFAULT_ORDER)
   const [announcement, setAnnouncement] = useState('')
@@ -36,7 +50,7 @@ export function AdaptiveSections({ sections }: { sections: SectionChild[] }) {
   const nodes = useRef(new Map<SectionId, HTMLElement>())
   const pendingMeasure = useRef<ReturnType<typeof measure> | null>(null)
 
-  const desired = hypothesis.order
+  const desired = desiredOrder ?? hypothesis.order
 
   useEffect(() => {
     // Same order the engine already gave us — nothing to do.
@@ -62,9 +76,9 @@ export function AdaptiveSections({ sections }: { sections: SectionChild[] }) {
     const leader = hypothesis.leader
     const movedFirst = constrained[frozenCount]
     const movedSecond = constrained[frozenCount + 1]
-    const who = leader
-      ? ` for ${PERSONA_LABELS[leader].toLowerCase()}`
-      : ''
+    // A declared reason wins: it is what the visitor actually asked for, and
+    // naming the inferred persona instead would report the wrong cause.
+    const who = reason ? ` ${reason}` : leader ? ` for ${PERSONA_LABELS[leader].toLowerCase()}` : ''
 
     setAnnouncement(
       movedFirst
@@ -73,7 +87,7 @@ export function AdaptiveSections({ sections }: { sections: SectionChild[] }) {
             (movedSecond ? `, then ${SECTIONS_LABEL[movedSecond]}.` : '.')
         : `Section order updated${who}.`,
     )
-  }, [desired, order, hypothesis.leader])
+  }, [desired, order, hypothesis.leader, reason])
 
   // LAST / INVERT / PLAY, after the DOM has the new order.
   useEffect(() => {

@@ -8,9 +8,13 @@ web
 
 ## Users
 
-Four confirmed visitor personas, each with a full section ordering in
-`lib/inference/personas.ts`. The site names its hypothesis as a claim about
-intent rather than a job title:
+Four confirmed visitor groups. The visitor **declares** which one they are, via
+the lens pills in the first viewport (`lib/lens.ts`); the page then commits to
+that declaration and orders its evidence accordingly. Nothing is inferred about
+a visitor who did not ask for it.
+
+Each lens maps onto a full section ordering in `lib/inference/personas.ts`, so
+the declared path and the inference engine cannot drift apart:
 
 - **AI product** — "You're evaluating how I build with models."
 - **Data & analytics** — "You're looking for someone who can work the data."
@@ -24,11 +28,15 @@ re-ranking changes sequence only.
 
 ## Product Purpose
 
-A personal portfolio for Waleed Barghouthi that infers who its visitor probably
-is, shows its reasoning, and lets the visitor overrule it. It re-orders its
-evidence sections to match the inferred persona while displaying a fixed readout
-of the current hypothesis, its confidence, the signals behind it, and a one-tap
-override.
+A personal portfolio for Waleed Barghouthi that asks a visitor why they came and
+commits to the answer, re-ordering its evidence to put that claim's proof first.
+
+The scoring engine that once ran ambiently — inferring a persona from passive
+signals and narrating its confidence in a fixed readout — is retired from that
+role as of the 2026 redesign. It survives as an exhibit the visitor opens
+deliberately. Three things were wrong with it as chrome: it felt presumptuous,
+it buried the person behind an abstraction, and it made every claim conditional
+on operating an instrument first.
 
 Success is weighted **equally** across two outcomes: a full-time role and
 freelance/contract engagements. Neither audience is privileged in future work —
@@ -38,7 +46,9 @@ scoped-work module and the engineering-depth modules are of equal standing.
 ## Positioning
 
 The site runs the same rule as the product it describes: **the model proposes,
-the application decides, the human confirms.** The demonstration is the argument.
+the application decides, the human confirms.** The demonstration is the argument
+— and after the redesign the human confirms *first*, by declaring a lens, rather
+than being profiled and offered an override afterwards.
 
 The differentiator a neighboring portfolio could not truthfully copy: the
 inference is a **deterministic log-odds scoring model**, not an LLM. No language

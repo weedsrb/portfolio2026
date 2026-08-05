@@ -13,33 +13,43 @@ import type { SectionContent } from '@/data/content'
 export function Section({
   content,
   children,
+  bare = false,
 }: {
   content: SectionContent
   children: ReactNode
+  /**
+   * Render only the proof and its notes.
+   *
+   * Inside a WorkBlock the claim and standfirst are already on the page, above
+   * the control that opened this. Repeating them emitted a second eyebrow, a
+   * second sibling h2 at the same level, and a duplicate standfirst — the block
+   * read as though the page had stuttered.
+   */
+  bare?: boolean
 }) {
   return (
     <section
       id={`section-${content.id}`}
-      aria-labelledby={`claim-${content.id}`}
-      className="hairline scroll-mt-8 py-16 md:py-24"
+      aria-labelledby={bare ? undefined : `claim-${content.id}`}
+      aria-label={bare ? content.proofLabel : undefined}
+      className={bare ? '' : 'hairline scroll-mt-8 py-16 md:py-24'}
     >
-      <Row annotation={<Annotation index={content.index} label={content.proofLabel} />}>
-        <h2
-          id={`claim-${content.id}`}
-          className="display text-2xl md:text-3xl"
-        >
-          {content.claim}
-        </h2>
+      <Row annotation={bare ? null : <Annotation index={content.index} label={content.proofLabel} />}>
+        {!bare && (
+          <>
+            <h2 id={`claim-${content.id}`} className="display text-2xl md:text-3xl">
+              {content.claim}
+            </h2>
 
-        <p className="prose-measure mt-6 text-base text-ink-muted">
-          {content.standfirst}
-        </p>
+            <p className="prose-measure mt-6 text-base text-ink-muted">{content.standfirst}</p>
+          </>
+        )}
 
         {content.syntheticLabel ? (
           <SyntheticNotice>{content.syntheticLabel}</SyntheticNotice>
         ) : null}
 
-        <div className="mt-10">{children}</div>
+        <div className={bare ? '' : 'mt-10'}>{children}</div>
 
         <TechnicalNote>{content.note}</TechnicalNote>
       </Row>

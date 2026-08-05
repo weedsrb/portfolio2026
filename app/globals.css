@@ -9,27 +9,39 @@
 /* -------------------------------------------------------------------------- */
 
 @theme {
-  --color-surface: #f5f7f7;
-  --color-surface-sunk: #ecf0f0;
-  --color-graticule: #dce4e4;
+  --color-surface: #eceae5;
+  --color-surface-sunk: #e2dfd8;
+  --color-surface-raised: #fffefb;
+  --color-graticule: #d5d1c8;
   /* The same line, pre-blended toward the surface, for the background grid. */
-  --color-graticule-faint: #eef2f2;
-  --color-ink: #10161a;
-  --color-ink-muted: #5c6a70;
+  --color-graticule-faint: #e4e1da;
+  --color-ink: #14120f;
+  --color-ink-muted: #6d675d;
 
   /*
    * THE SIGNAL RULE: --signal may only be applied to a value that is currently
-   * changing or can change. A static heading in signal teal is a lie. If you
-   * find signal teal on an inert element, that is a bug, not a style choice.
+   * changing or can change. A static heading in signal vermilion is a lie. If
+   * you find it on an inert element, that is a bug, not a style choice.
    *
    * The two sanctioned uses, and there are no others:
    *   1. A computed value that moves — a similarity score above the cutoff, a
    *      validation check's outcome, the confidence numeral.
-   *   2. Interactive state — :focus-visible, and :hover on a control. Teal here
-   *      means "this responds to you", which is itself a live value.
+   *   2. Interactive state — :focus-visible, and :hover on a control. Vermilion
+   *      here means "this responds to you", itself a live value.
    * Everything else on the page is ink, ink-muted or graticule.
+   *
+   * TWO VERMILIONS, AND THE SPLIT IS A CONTRAST RULE, NOT A TASTE ONE.
+   * --signal is the text and fill role: 4.95:1 on --surface, and white clears
+   * 5.9:1 on it, so it is safe at any size and safe to put white on.
+   * --signal-display is the bright one at 3.28:1 — it clears AA for large text
+   * only (>=24px, or >=18.66px bold) and may never carry body copy, a label, a
+   * small numeral, or white text.
+   *
+   * The first version of this palette had one vermilion at #e8471f doing both
+   * jobs; it failed AA at 51 inherited call sites and on the primary CTA.
    */
-  --color-signal: #0e8f76;
+  --color-signal: #b8330d;
+  --color-signal-display: #e8471f;
 
   /* The readout: the one dark, lit object on a light page. */
   --color-instrument-bg: #0a0f12;
@@ -45,10 +57,10 @@
   --color-phosphor: #4fe3c1;
   --color-indigo: #6c7bff;
 
-  --font-display: var(--font-fraunces), Georgia, serif;
-  --font-sans: var(--font-plex-sans), system-ui, sans-serif;
-  --font-mono: var(--font-plex-mono), ui-monospace, monospace;
-  --font-arabic: var(--font-plex-arabic), var(--font-plex-sans), sans-serif;
+  --font-display: var(--font-anton), 'Arial Black', sans-serif;
+  --font-sans: var(--font-archivo), system-ui, sans-serif;
+  --font-mono: var(--font-azeret), ui-monospace, monospace;
+  --font-arabic: var(--font-plex-arabic), var(--font-archivo), sans-serif;
 
   /* Six steps, ratio ~1.333, defined once. */
   --text-2xs: 0.6875rem;
@@ -95,24 +107,28 @@ html {
    */
   font-variant-numeric: tabular-nums;
   -webkit-text-size-adjust: 100%;
+  /* Clears the fixed header, so an in-page anchor never lands underneath it. */
+  scroll-padding-top: 6rem;
 }
 
-body {
-  /*
-   * The graticule. Aligned to the real layout grid rather than an arbitrary
-   * rhythm, so it reads as measurement texture and never as decoration.
-   *
-   * The line colour is pre-blended toward the surface rather than being drawn
-   * at full strength and faded back with an overlay. The overlay version needed
-   * `body > * { position: relative }` to lift content above it, which silently
-   * broke `position: fixed` for any direct child of body — that is exactly how
-   * the readout ended up scrolling away with the page instead of staying put.
-   */
-  background-image:
-    linear-gradient(to right, var(--color-graticule-faint) 1px, transparent 1px),
-    linear-gradient(to bottom, var(--color-graticule-faint) 1px, transparent 1px);
-  background-size: 4rem 4rem;
-  background-position: calc(var(--page-pad) - 1px) 0;
+/*
+ * Grain, not graticule. The old plotting grid belonged to the instrument world;
+ * this one wants paper tooth. Painted on a ::before rather than on body itself
+ * so it cannot inherit into a child's background, and pinned with `fixed` so it
+ * does not tile away down a long page.
+ *
+ * It stays off body's own background-image for the reason the old comment
+ * records: anything that forces `position: relative` onto body's children
+ * silently breaks `position: fixed` for them.
+ */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.32;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='.4'/%3E%3C/svg%3E");
 }
 
 ::selection {
@@ -136,11 +152,29 @@ body {
 
 @utility display {
   font-family: var(--font-display);
-  font-optical-sizing: auto;
-  font-variation-settings: 'SOFT' 20, 'WONK' 1;
+  font-weight: 400;
   letter-spacing: -0.02em;
-  line-height: var(--leading-tight);
+  line-height: 0.92;
+  text-transform: uppercase;
   text-wrap: balance;
+}
+
+/* The pill: every control on this page is one. */
+@utility pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 999px;
+  border: 1px solid var(--color-ink);
+  background: var(--color-surface-raised);
+  padding: 0.6rem 1.05rem;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.04em;
+  transition:
+    transform 0.22s cubic-bezier(0.2, 0.8, 0.2, 1),
+    background 0.22s ease,
+    color 0.22s ease;
 }
 
 /* Instrument annotation: the small letterspaced mono labels. */
@@ -161,6 +195,42 @@ body {
 /* A hairline that behaves like a plot axis. */
 @utility hairline {
   border-top: var(--rule);
+}
+
+/* -------------------------------------------------------------------------- */
+/* The lens pills                                                              */
+/*                                                                             */
+/* Tilt is the resting state; approaching one straightens and lifts it, so the */
+/* row settles as you move across it. The chosen pill goes solid ink — the one */
+/* thing on the page that is unambiguously a commitment.                       */
+/* -------------------------------------------------------------------------- */
+
+.lens-pill {
+  transform: rotate(var(--tilt));
+}
+
+.lens-pill:hover,
+.lens-pill:focus-within {
+  transform: rotate(0deg) translateY(-2px);
+}
+
+/*
+ * The chosen pill takes the accent — the declaration is the live state, so by
+ * the signal rule it is the only pill entitled to vermilion. The earlier
+ * version had this inverted: four candy hues at rest, flat ink once chosen,
+ * which spent the accent on the inert pills and drained it from the live one.
+ */
+.lens-pill[data-on] {
+  background: var(--color-signal);
+  border-color: var(--color-signal);
+  color: #fff;
+  transform: rotate(0deg);
+}
+
+/* The radio is visually hidden, so the ring has to be drawn on the pill. */
+.lens-pill:focus-within {
+  outline: 2px solid var(--color-signal);
+  outline-offset: 3px;
 }
 
 /* -------------------------------------------------------------------------- */

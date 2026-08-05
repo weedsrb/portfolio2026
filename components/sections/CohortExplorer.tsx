@@ -10,7 +10,7 @@ import { SECTIONS } from '@/data/content'
  */
 export function CohortExplorer() {
   return (
-    <Section content={SECTIONS[5]}>
+    <Section content={SECTIONS[5]} bare>
       <CohortControls />
     </Section>
   )

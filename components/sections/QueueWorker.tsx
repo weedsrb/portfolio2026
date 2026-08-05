@@ -12,7 +12,7 @@ import { MOEEN, SECTIONS } from '@/data/content'
 
 export function QueueWorker() {
   return (
-    <Section content={SECTIONS[4]}>
+    <Section content={SECTIONS[4]} bare>
       <Panel label="Architecture">
         <div className="px-4 py-6">
           <QueueDiagram />
