@@ -125,7 +125,7 @@ export const SECTIONS: Record<SectionId, SectionContent> = {
       'Mo’een’s worker processes every inbound message through a queue with leases, retries, dead-lettering and heartbeats. The interesting part is not the happy path. It is what happens when a worker dies holding a lease.',
     proofLabel: 'Queue worker',
     note: 'A lease is a claim with an expiry, so a worker that dies mid-job cannot block the queue forever — the lease lapses and the job is reclaimed. Retries are bounded and back off; anything that exhausts them goes to the dead-letter table with its error, where it can be inspected instead of silently disappearing.',
-    interactive: false,
+    interactive: true,
   },
   5: {
     id: 5,
