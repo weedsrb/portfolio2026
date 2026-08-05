@@ -11,7 +11,7 @@ import { MOEEN, PERSON, PRIMARY_CLAIM } from '@/data/content'
 export function Opening() {
   return (
     <header className="py-20 md:py-32">
-      <Row annotation={<span className="annotation">Waleed Sarabta</span>}>
+      <Row annotation={<span className="annotation">{PERSON.name}</span>}>
         <h1 className="display text-3xl md:text-4xl">{PERSON.line}</h1>
 
         <p className="prose-measure mt-8 text-lg text-ink-muted">

@@ -18,7 +18,7 @@ import type { SectionId } from '@/lib/inference/personas'
 /** TODO(waleed): LinkedIn profile URL. */
 export const TODO_LINKEDIN_URL: string | null = null
 
-/** TODO(waleed): path to the CV in /public, e.g. '/waleed-sarabta-cv.pdf'. */
+/** TODO(waleed): path to the CV in /public, e.g. '/waleed-barghouthi-cv.pdf'. */
 export const TODO_CV_FILE: string | null = null
 
 /**
@@ -33,7 +33,7 @@ export const TODO_RETRIEVAL_STATUS: string | null = null
 /* -------------------------------------------------------------------------- */
 
 export const PERSON = {
-  name: 'Waleed Sarabta',
+  name: 'Waleed Barghouthi',
   role: 'Product & AI engineering',
   /** One line of what he builds. Sits under the name, at display size. */
   line: 'I build systems that let a model propose and a machine decide.',
@@ -44,7 +44,7 @@ export const PERSON = {
 
 export const SITE = {
   description:
-    'Waleed Sarabta builds AI product and data systems. This page works out who you probably are, shows its reasoning, and lets you overrule it.',
+    'Waleed Barghouthi builds AI product and data systems. This page works out who you probably are, shows its reasoning, and lets you overrule it.',
   /** Publishing the source of a site that profiles you is the whole point. */
   repo: 'https://github.com/weedsrb/portfolio2026',
   repoLabel: 'Source for this page',
