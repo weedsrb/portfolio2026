@@ -15,18 +15,19 @@ import type { SectionId } from '@/lib/inference/personas'
 /* nothing at all when a value is missing — a broken link is worse than none.   */
 /* -------------------------------------------------------------------------- */
 
-/** TODO(waleed): LinkedIn profile URL. */
-export const TODO_LINKEDIN_URL: string | null = null
+export const LINKEDIN_URL: string | null = 'https://www.linkedin.com/in/waleedsrb'
 
 /** Served from /public. */
 export const CV_FILE: string | null = '/waleed-barghouthi-cv.pdf'
 
 /**
- * TODO(waleed): current status of the contract/schedule risk retrieval project.
- * Until this is filled in, the project is described as in progress and is not
- * claimed to be demoable.
+ * Status of the contract/schedule risk retrieval project (Sentinel).
+ *
+ * Built. Not currently surfaced anywhere on the page, and "built" is not a
+ * claim that it is publicly demoable — nothing should assert a live demo, a
+ * customer, or a result on the strength of this line alone.
  */
-export const TODO_RETRIEVAL_STATUS: string | null = null
+export const RETRIEVAL_STATUS: string | null = 'Sentinel is built.'
 
 /* -------------------------------------------------------------------------- */
 /* Person                                                                      */

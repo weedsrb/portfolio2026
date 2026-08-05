@@ -110,5 +110,6 @@ on the page.
 
 ## Status
 
-Everything above is built. Still open: a couple of links in `data/content.ts`
-that are `null` until supplied, rather than guessed at.
+Everything above is built, and the links that were `null` pending real values
+are supplied. The only `null`s left in `data/content.ts` are the open-ended
+`end` dates on current roles, which mean exactly that.

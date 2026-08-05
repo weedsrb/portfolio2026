@@ -39,3 +39,8 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# agent skills (impeccable) — reinstall with `npx impeccable install`
+/.claude
+/.agents
+/.codex
