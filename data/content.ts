@@ -104,8 +104,8 @@ export const SECTIONS: Record<SectionId, SectionContent> = {
     proofLabel: 'Query console',
     note: 'The schema mirrors production: orders, order lines, merchants, and the message each order was parsed from. Multi-tenant, so every query has to be ownership-aware — the tenant predicate is not optional and is enforced in the database as well as the API.',
     syntheticLabel:
-      'Synthetic data, shaped like the real schema. Pilot merchants’ orders are theirs, not mine to publish.',
-    interactive: false,
+      'Synthetic data, shaped like the real schema, generated from a fixed seed so every visitor queries the same 1,002 rows. Pilot merchants’ orders are theirs, not mine to publish.',
+    interactive: true,
   },
   3: {
     id: 3,
@@ -334,7 +334,7 @@ export const HOW_THIS_WORKS = {
   points: [
     {
       title: 'Nothing leaves your browser',
-      body: 'No analytics, no cookie, no network request, no server. The scoring runs here, on this page, and the result is never sent anywhere. You can check — open the network tab and reload.',
+      body: 'No analytics, no cookie, no server, and nothing about you in any request. Your browser fetches this page and its code, exactly like any website, and after that every signal below is scored here and never leaves. Even the SQL console runs on a database engine written into the page rather than calling one. Open the network tab and check.',
     },
     {
       title: 'It is not an AI',

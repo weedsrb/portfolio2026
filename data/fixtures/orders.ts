@@ -81,28 +81,15 @@ select
                     then 1 else 0 end), 1)    as pct_confirmed
 from orders
 where merchant_id = current_tenant()
-  and created_at >= now() - interval '90 days'
 group by 1
 order by 1;`
 
-export type QueryResultRow = {
-  confidence_bucket: string
-  orders: number
-  pct_untouched: number
-  pct_confirmed: number
-}
-
-export const FEATURED_QUERY_RESULT: QueryResultRow[] = [
-  { confidence_bucket: '0.50–0.60', orders: 41, pct_untouched: 22.0, pct_confirmed: 51.2 },
-  { confidence_bucket: '0.60–0.70', orders: 88, pct_untouched: 35.2, pct_confirmed: 68.2 },
-  { confidence_bucket: '0.70–0.80', orders: 164, pct_untouched: 51.8, pct_confirmed: 79.9 },
-  { confidence_bucket: '0.80–0.90', orders: 297, pct_untouched: 68.4, pct_confirmed: 88.6 },
-  { confidence_bucket: '0.90–1.00', orders: 412, pct_untouched: 74.5, pct_confirmed: 91.3 },
-]
 
 /**
  * What the result actually tells you. Worth stating, because the interesting
- * finding is the one that argues against trusting the model.
+ * finding is the one that argues against trusting the model — and it is
+ * asserted in lib/sql/execute.test.ts against the real rows, so this sentence
+ * cannot quietly stop being true.
  */
 export const QUERY_READING =
   'Confidence correlates with being left alone, but it flattens badly at the top: a quarter of the model’s most confident parses still needed a human edit. That flattening is the entire argument for the validation gate.'
