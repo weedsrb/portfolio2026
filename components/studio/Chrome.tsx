@@ -60,9 +60,18 @@ export function Chrome() {
         <LocalTime /> · Open to roles
       </p>
 
+      {/*
+        Hidden below sm. At 390px the status line, the nav, and the primary
+        action do not fit on one row, and the first attempt at keeping all three
+        pushed "Get in touch" off the right edge — the confirmed primary action,
+        unreachable on a phone.
+        The nav is in-page anchors only and the page is a short scroll, so it is
+        the one of the three that costs least to drop. The status line carries
+        identity and availability; the mailto is the whole point.
+      */}
       <nav
         aria-label="Primary"
-        className="border-graticule bg-surface-raised/85 flex gap-0.5 rounded-full border p-1.5 backdrop-blur-md"
+        className="border-graticule bg-surface-raised/85 hidden gap-0.5 rounded-full border p-1.5 backdrop-blur-md sm:flex"
       >
         {NAV.map((item) => (
           <a
