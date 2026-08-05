@@ -59,7 +59,17 @@ export const metadata: Metadata = {
   alternates: { canonical: '/' },
 }
 
-export default function RootLayout({ children }: LayoutProps<'/'>) {
+/*
+ * Props typed explicitly rather than with Next's generated `LayoutProps<'/'>`.
+ * That type lives in .next/types, so `tsc --noEmit` only passes once something
+ * has already built — which meant typecheck passed locally off stale artifacts
+ * and failed on a clean checkout.
+ */
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
   return (
     <html
       lang="en"
