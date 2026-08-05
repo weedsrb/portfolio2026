@@ -115,7 +115,7 @@ export const SECTIONS: Record<SectionId, SectionContent> = {
       'Documents get chunked, embedded, and searched by cosine similarity. I wrote the cosine by hand rather than pulling a library, because the interesting decisions are in the chunking and the cutoff, not the dot product.',
     proofLabel: 'Similarity explorer',
     note: 'Similarity is not relevance. A high cosine score means two chunks talk alike, which is why the cutoff matters more than the ranking: past a certain score, you are retrieving noise that reads plausibly, and that is worse than retrieving nothing.',
-    interactive: false,
+    interactive: true,
   },
   4: {
     id: 4,
@@ -135,9 +135,9 @@ export const SECTIONS: Record<SectionId, SectionContent> = {
       'Retention by weekly cohort. The question is never “what is our retention” — it is which cohort, measured from when, and what you plan to do differently depending on the answer.',
     proofLabel: 'Cohort retention',
     note: 'Cohorting by signup week rather than by calendar week is what makes the curve mean anything: it separates “our product got better” from “we acquired different people”. The window definition changes the number more than most product changes do.',
+    interactive: true,
     syntheticLabel:
       'Synthetic cohorts, modelled on pilot-shaped retention. The pilot’s real numbers are not mine to publish.',
-    interactive: false,
   },
   6: {
     id: 6,

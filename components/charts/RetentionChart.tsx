@@ -26,15 +26,19 @@ const path = line<[number, number]>()
   .y((d) => y(d[1]))
 
 /** Earlier cohorts recede; the newest is drawn at full ink. */
-function opacityFor(index: number): number {
-  return 0.3 + (0.7 * index) / Math.max(1, COHORTS.length - 1)
+function opacityFor(index: number, total: number): number {
+  return 0.3 + (0.7 * index) / Math.max(1, total - 1)
 }
 
 function points(cohort: Cohort): [number, number][] {
   return cohort.retention.map((value, week) => [week, value])
 }
 
-export function RetentionChart() {
+export function RetentionChart({
+  cohorts = COHORTS,
+}: {
+  cohorts?: readonly Cohort[]
+} = {}) {
   const yTicks = [0, 0.25, 0.5, 0.75, 1]
   const xTicks = Array.from({ length: MAX_WEEKS + 1 }, (_, i) => i)
 
@@ -49,11 +53,15 @@ export function RetentionChart() {
         >
           <title id="retention-title">Retention by signup-week cohort</title>
           <desc id="retention-desc">
-            Seven weekly cohorts, each starting at 100 percent in week zero.
-            Every cohort drops sharply in week one and then flattens. Later
-            cohorts retain better than earlier ones: the first cohort falls to 50
-            percent by week one and 14 percent by week six, while the most recent
-            cohort holds 74 percent at week one.
+            {cohorts
+              .map(
+                (c) =>
+                  `${c.label}, ${c.size} merchants: ` +
+                  c.retention
+                    .map((v, w) => `week ${w} ${Math.round(v * 100)}%`)
+                    .join(', ')
+              )
+              .join('. ')}
           </desc>
 
           <g transform={`translate(${M.left},${M.top})`}>
@@ -116,7 +124,7 @@ export function RetentionChart() {
             </text>
 
             {/* Curves. */}
-            {COHORTS.map((cohort, i) => {
+            {cohorts.map((cohort, i) => {
               const d = path(points(cohort))
               if (!d) return null
               const last = cohort.retention.length - 1
@@ -127,8 +135,8 @@ export function RetentionChart() {
                     d={d}
                     fill="none"
                     stroke="var(--color-ink)"
-                    strokeOpacity={opacityFor(i)}
-                    strokeWidth={i === COHORTS.length - 1 ? 2 : 1.25}
+                    strokeOpacity={opacityFor(i, cohorts.length)}
+                    strokeWidth={i === cohorts.length - 1 ? 2 : 1.25}
                   />
                   <text
                     x={x(last) + 8}
