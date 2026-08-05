@@ -56,6 +56,9 @@ export type MessageFixture = {
   }
 }
 
+/** Where this merchant delivers. Anything else is refused, not guessed at. */
+export const DELIVERY_ZONES = ['Al-Bireh', 'Ramallah', 'Betunia'] as const
+
 /** Catalogue the validator checks against. Small on purpose — it is the point. */
 export const CATALOGUE = [
   { sku: 'KNF-004', name: 'Knafeh tray, large', price: 45, maxQuantity: 10 },

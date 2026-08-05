@@ -91,9 +91,9 @@ export const SECTIONS: Record<SectionId, SectionContent> = {
     claim: 'Watch it catch a confident mistake.',
     standfirst:
       'A customer sends a message in Arabic, English, or both at once. The model reads it and suggests an order. Nothing it suggests reaches the merchant until deterministic code has checked every field against the catalogue and the rules.',
-    proofLabel: 'Order validation trace',
+    proofLabel: 'Order validation sandbox',
     note: 'The parse step is the only part a model touches. Everything after it is ordinary code with ordinary tests: catalogue lookup, quantity bounds, price reconciliation, address completeness. A confident wrong parse is still caught, because the validator does not care how confident the parse was.',
-    interactive: false,
+    interactive: true,
   },
   2: {
     id: 2,
