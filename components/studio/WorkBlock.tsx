@@ -50,7 +50,21 @@ export function WorkBlock({
             className="pill mt-6 hover:-translate-y-0.5"
           >
             {open ? 'Close it' : openLabel}
-            <span aria-hidden="true">{open ? '↑' : '↓'}</span>
+            {/* Drawn, not a Unicode arrow — same 16×16 box and stroke as the lens marks. */}
+            <svg
+              aria-hidden="true"
+              width="13"
+              height="13"
+              viewBox="0 0 16 16"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.6"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className={open ? 'rotate-180' : undefined}
+            >
+              <path d="M8 3.5 V12.5 M4 8.5 L8 12.5 L12 8.5" />
+            </svg>
           </button>
         </div>
       </div>
